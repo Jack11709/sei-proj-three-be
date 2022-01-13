@@ -10,16 +10,19 @@ export function connectDb() {
 }
 
 export function truncateDb() {
-  return mongoose.connection.db.dropDatabase()
-  // if (mongoose.connection.readyState !== 0) {
-  //   const { collections } = mongoose.connection
+  // return mongoose.connection.db.dropDatabase()
 
-  //   const promises = Object.keys(collections).map(collection => {
-  //     return mongoose.connection.collection(collection).deleteMany({})
-  //   })
+  //* If having issues dropping db locally, comment this ^^^ line aboce back om  and COMMENT OUT the if statement below !
 
-  //   return Promise.all(promises)
-  // }
+  if (mongoose.connection.readyState !== 0) {
+    const { collections } = mongoose.connection
+
+    const promises = Object.keys(collections).map(collection => {
+      return mongoose.connection.collection(collection).deleteMany({})
+    })
+
+    return Promise.all(promises)
+  }
 }
 
 
